@@ -1,5 +1,6 @@
 package com.kun.controller;
 
+import com.kun.annotation.SystemLog;
 import com.kun.domain.Result;
 import com.kun.domain.entity.User;
 import com.kun.service.IUserService;
@@ -28,6 +29,7 @@ public class UserController {
     }
 
     @PutMapping("/userInfo")
+    @SystemLog(businessName = "更新用户信息")
     public Result updateUserInfo(@RequestBody User user) {
         return userService.updateUserInfo(user);
     }
