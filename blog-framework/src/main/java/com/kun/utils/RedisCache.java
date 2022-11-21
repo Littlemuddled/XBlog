@@ -197,6 +197,16 @@ public class RedisCache {
     }
 
     /**
+     * 增加hash中value的值
+     * @param key Redis键
+     * @param hKey Hash键
+     * @param value 增加的值
+     */
+    public void incrementCacheMapValue(String key, String hKey, int value) {
+        redisTemplate.opsForHash().increment(key,hKey,value);
+    }
+
+    /**
      * 获取多个Hash中的数据
      *
      * @param key   Redis键

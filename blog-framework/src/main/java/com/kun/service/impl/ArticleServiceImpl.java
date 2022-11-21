@@ -3,6 +3,7 @@ package com.kun.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kun.constants.RedisKey;
 import com.kun.constants.SystemConstants;
 import com.kun.domain.Result;
 import com.kun.domain.entity.Article;
@@ -15,6 +16,7 @@ import com.kun.mapper.ArticleMapper;
 import com.kun.service.IArticleService;
 import com.kun.service.ICategoryService;
 import com.kun.utils.BeanCopyUtils;
+import com.kun.utils.RedisCache;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -33,6 +35,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Resource
     private ICategoryService categoryService;
+    @Resource
+    private RedisCache redisCache;
 
     @Override
     public Result hotArticleList() {
@@ -62,6 +66,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Page<Article> page = this.page(articlePage, queryWrapper);
         List<Article> articleList = page.getRecords();
 
+/*
+        articleList.stream()
+                .forEach(article -> article.setViewCount(((Integer)redisCache.getCacheMapValue(RedisKey.ARTICLE_VIEW_COUNT, (article.getId()).toString())).longValue()));
+*/
         //根据id查询categoryName
 /*        for (Article article : articleList) {
             Category category = categoryService.getById(article.getCategoryId());
@@ -82,7 +90,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Result articleDetail(Long id) {
         Article article = this.getById(id);
+        //查询redis中的浏览量
+        Integer viewCount = redisCache.getCacheMapValue(RedisKey.ARTICLE_VIEW_COUNT, id.toString());
+        article.setViewCount(viewCount.longValue());
         ArticleDetailVO articleDetailVO = BeanCopyUtils.copyBean(article, ArticleDetailVO.class);
+
 
         //根据分类id查询分类名
         Long categoryId = articleDetailVO.getCategoryId();
@@ -92,5 +104,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
 
         return Result.okResult(articleDetailVO);
+    }
+
+    @Override
+    public Result updateViewCount(Long id) {
+        redisCache.incrementCacheMapValue(RedisKey.ARTICLE_VIEW_COUNT, id.toString(), 1);
+        return Result.okResult();
     }
 }

@@ -29,6 +29,11 @@ public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Article(Long id, Long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+    }
+
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 

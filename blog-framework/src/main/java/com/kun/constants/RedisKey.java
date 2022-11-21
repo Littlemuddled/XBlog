@@ -7,4 +7,5 @@ package com.kun.constants;
 public class RedisKey {
 
     public static final String LOGIN_KEY = "blogLogin:";
+    public static final String ARTICLE_VIEW_COUNT = "article:viewCount";
 }

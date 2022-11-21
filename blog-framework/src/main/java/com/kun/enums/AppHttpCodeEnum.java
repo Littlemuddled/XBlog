@@ -26,7 +26,8 @@ public enum AppHttpCodeEnum {
     NICKNAME_NOT_NULL(513,"用户昵称不能为空！！！"),
     EMAIL_NOT_NULL(514,"邮箱不能为空！！！"),
     NICKNAME_EXIST(515,"昵称已存在！！！"),
-    REGISTER_FAIL(516,"注册失败！！！");
+    REGISTER_FAIL(516,"注册失败！！！"),
+    UPDATE_VIEW_COUNT_ERROR(517, "更新访问次数失败！！！");
 
     final int code;
     final String msg;

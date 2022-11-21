@@ -2,10 +2,8 @@ package com.kun.controller;
 
 import com.kun.domain.Result;
 import com.kun.service.IArticleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -16,6 +14,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/article")
+@Api(tags = "博客文章")
 public class ArticleController {
 
     @Resource
@@ -34,6 +33,11 @@ public class ArticleController {
     @GetMapping("/{id}")
     public Result articleDetail(@PathVariable Long id) {
         return articleService.articleDetail(id);
+    }
+
+    @PutMapping("/updateViewCount/{id}")
+    public Result updateViewCount(@PathVariable Long id) {
+        return articleService.updateViewCount(id);
     }
 
 
