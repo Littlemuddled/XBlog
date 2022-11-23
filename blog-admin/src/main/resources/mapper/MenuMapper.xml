@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kun.mapper.MenuMapper">
+
+    <resultMap type="com.kun.domain.vo.MenuVO" id="MenuVOType">
+        <id property="id" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="path" column="path"/>
+        <result property="component" column="component"/>
+        <result property="visible" column="visible"/>
+        <result property="status" column="status"/>
+        <result property="perms" column="perms"/>
+        <result property="isFrame" column="is_frame"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="icon" column="icon"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <!--
+    List<String> selectPermsByUserId(@Param("id") Long id);
+    -->
+    <select id="selectPermsByUserId" resultType="string">
+        select distinct m.perms
+        from sys_user_role ur
+                 left join sys_role_menu rm on ur.role_id = rm.role_id
+                 left join sys_menu m on rm.menu_id = m.id
+        where ur.user_id = #{id}
+          and m.`status` = 0
+          and m.del_flag = 0
+          and m.menu_type in ('C', 'F')
+    </select>
+
+    <!--
+    List<MenuVO> selectRouterMenuTreeByUserId(@Param("userId") Long userId);
+    -->
+    <select id="selectRouterMenuTreeByUserId" resultMap="MenuVOType">
+        SELECT DISTINCT m.id,
+                        m.parent_id,
+                        m.menu_name,
+                        m.path,
+                        m.component,
+                        m.visible,
+                        m.status,
+                        IFNULL(m.perms, '') AS perms,
+                        m.is_frame,
+                        m.menu_type,
+                        m.icon,
+                        m.order_num,
+                        m.create_time
+        FROM `sys_user_role` ur
+                 LEFT JOIN `sys_role_menu` rm ON ur.`role_id` = rm.`role_id`
+                 LEFT JOIN `sys_menu` m ON m.`id` = rm.`menu_id`
+        WHERE ur.`user_id` = #{userId}
+          AND m.`menu_type` IN ('C', 'M')
+          AND m.`status` = 0
+          AND m.`del_flag` = 0
+        ORDER BY m.parent_id, m.order_num
+    </select>
+
+    <select id="selectMenuListByRoleId" resultType="long">
+        select m.id
+        from sys_menu m
+                 left join sys_role_menu rm on m.id = rm.menu_id
+        where rm.role_id = #{roleId}
+        order by m.parent_id, m.order_num
+    </select>
+</mapper>

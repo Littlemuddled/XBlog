@@ -1,6 +1,7 @@
 package com.kun.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -101,5 +102,9 @@ public class User implements Serializable {
      * 删除标志（0代表未删除，1代表已删除）
      */
     private Integer delFlag;
+
+    //关联角色id数组，非user表字段
+    @TableField(exist = false)
+    private Long[] roleIds;
 
 }

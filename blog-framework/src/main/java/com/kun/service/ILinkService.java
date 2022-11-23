@@ -3,6 +3,7 @@ package com.kun.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.kun.domain.Result;
 import com.kun.domain.entity.Link;
+import com.kun.domain.vo.PageVO;
 
 /**
  * <p>
@@ -20,4 +21,5 @@ public interface ILinkService extends IService<Link> {
      */
     Result getAllLink();
 
+    PageVO<Link> selectLinkPage(Link link, Integer pageNum, Integer pageSize);
 }

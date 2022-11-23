@@ -2,7 +2,10 @@ package com.kun.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.kun.domain.Result;
+import com.kun.domain.dto.AddArticleDto;
+import com.kun.domain.dto.ArticleDto;
 import com.kun.domain.entity.Article;
+import com.kun.domain.vo.AdminArticle2VO;
 
 /**
  * Desc:
@@ -39,4 +42,41 @@ public interface IArticleService extends IService<Article> {
      * @return
      */
     Result updateViewCount(Long id);
+
+    /**
+     * 添加博客文章
+     * @param addArticleDto
+     * @return
+     */
+    Result add(AddArticleDto addArticleDto);
+
+    /**
+     * 模糊分页查询博客文章
+     * @param articleDto 接收的模糊查询字段对象
+     * @param pageNum 当前页数
+     * @param pageSize 每页记录数
+     * @return
+     */
+    Result getAllArticle(ArticleDto articleDto, Integer pageNum, Integer pageSize);
+
+    /**
+     * 根据id查询文章
+     * @param id 文章id
+     * @return
+     */
+    Result getByArticleId(Long id);
+
+    /**
+     * 更新博客文章
+     * @param adminArticle2VO
+     * @return
+     */
+    Result updateArticle(AdminArticle2VO adminArticle2VO);
+
+    /**
+     * 根据id删除文章
+     * @param id
+     * @return
+     */
+    Result deleteArticle(Long id);
 }

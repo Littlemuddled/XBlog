@@ -18,16 +18,23 @@ public enum AppHttpCodeEnum {
     LOGIN_ERROR(505,"用户名或密码错误！！！"),
     CONTENT_NOT_NULL(506,"内容不能为空！！！"),
     CONTENT_SAVE_FAIL(507,"添加评论失败！！！"),
+    ARTICLE_SAVE_FAIL(507,"添加文章失败！！！"),
+    ARTICLE_TAG_SAVE_FAIL(507,"添加文章标签关联失败！！！"),
+    TAG_SAVE_FAIL(507,"添加标签失败！！！"),
     USER_NO_FIND(508,"查不到用户信息！！！"),
     FILE_TYPE_ERROR(509,"图片类型错误！！！"),
     UPDATE_FAIL(510,"更新失败！！！"),
+    DELETE_FAIL(510,"删除失败！！！"),
     USERNAME_NOT_NULL(511,"用户名不能为空！！！"),
     PASSWORD_NOT_NULL(512,"用户密码不能为空！！！"),
     NICKNAME_NOT_NULL(513,"用户昵称不能为空！！！"),
     EMAIL_NOT_NULL(514,"邮箱不能为空！！！"),
     NICKNAME_EXIST(515,"昵称已存在！！！"),
     REGISTER_FAIL(516,"注册失败！！！"),
-    UPDATE_VIEW_COUNT_ERROR(517, "更新访问次数失败！！！");
+    UPDATE_VIEW_COUNT_ERROR(517, "更新访问次数失败！！！"),
+    SELECT_PERMS_ERROR(518,"查询用户权限异常"),
+    SELECT_ROLE_ERROR(519,"查询用户角色异常");
+
 
     final int code;
     final String msg;

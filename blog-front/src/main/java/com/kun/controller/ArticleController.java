@@ -1,6 +1,7 @@
 package com.kun.controller;
 
 import com.kun.domain.Result;
+import com.kun.job.UpdateViewCountJob;
 import com.kun.service.IArticleService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,8 @@ public class ArticleController {
 
     @Resource
     private IArticleService articleService;
+    @Resource
+    private UpdateViewCountJob updateViewCountJob;
 
     @GetMapping("/hotArticleList")
     public Result hotArticleList() {
@@ -40,5 +43,10 @@ public class ArticleController {
         return articleService.updateViewCount(id);
     }
 
+
+    @PutMapping("/updateView")
+    public void updateView() {
+        updateViewCountJob.update();
+    }
 
 }

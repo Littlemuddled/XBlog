@@ -58,4 +58,21 @@ public class SystemConstants {
      * 友链评论
      */
     public static final String LINK_COMMENT = "1";
+
+    /**
+     * 菜单类型 F
+     */
+    public static final String MENU_TYPE_F = "F";
+    /**
+     * 菜单类型 M
+     */
+    public static final String MENU_TYPE_M = "M";
+    /**
+     * 菜单类型 C
+     */
+    public static final String MENU_TYPE_C = "C";
+
+    public static final String ADMIN_TYPE = "1";
+
+    public static final String NORMAL = "0";
 }

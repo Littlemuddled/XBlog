@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,9 +35,23 @@ public class UpdateViewCountJob {
         List<Article> list = entrySet.stream()
                 .map(entry -> new Article(Long.valueOf(entry.getKey()), entry.getValue().longValue()))
                 .collect(Collectors.toList());
+//        list.stream().forEach(article -> articleService.updateById(article));
         boolean b = articleService.updateBatchById(list);
         if (!b) {
             throw new SystemException(AppHttpCodeEnum.UPDATE_VIEW_COUNT_ERROR);
         }
+    }
+
+    public void update() {
+        Map<String, Integer> map = redisCache.getCacheMap(RedisKey.ARTICLE_VIEW_COUNT);
+        Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+        List<Article> list = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : entrySet) {
+            Long id = Long.valueOf(entry.getKey());
+            Long count = entry.getValue().longValue();
+            Article article = new Article(id, count);
+            list.add(article);
+        }
+        articleService.updateBatchById(list);
     }
 }

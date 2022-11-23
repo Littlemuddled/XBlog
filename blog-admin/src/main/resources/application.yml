@@ -10,10 +10,10 @@ spring:
     multipart:
       max-file-size: 2MB
       max-request-size: 5MB
-#  redis:
-#    host: 47.108.149.72
-#    port: 6379
-#    password: admin123
+  redis:
+    host: 47.108.149.72
+    port: 6379
+    password: admin123
 
 mybatis-plus:
   configuration:

@@ -33,4 +33,16 @@ public interface IUserService extends IService<User> {
      * @return
      */
     Result register(User user);
+
+    Result selectUserPage(User user, Integer pageNum, Integer pageSize);
+
+    boolean checkUserNameUnique(String userName);
+
+    boolean checkPhoneUnique(User user);
+
+    boolean checkEmailUnique(User user);
+
+    Result addUser(User user);
+
+    void updateUser(User user);
 }

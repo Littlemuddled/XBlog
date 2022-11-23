@@ -2,18 +2,17 @@ package com.kun.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 标签 前端控制器
+ * 用户和角色关联表 前端控制器
  * </p>
  *
  * @author kun
- * @since 2022-11-18
+ * @since 2022-11-19
  */
-@RestController
-@RequestMapping("/blog/tag")
-public class TagController {
+@Controller
+@RequestMapping("/userRole")
+public class UserRoleController {
 
 }
