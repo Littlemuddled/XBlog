@@ -77,10 +77,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
 
     @Override
     public Result updateTag(Tag tag) {
-        boolean b = this.updateById(tag);
-        if (!b) {
-            throw new SystemException(AppHttpCodeEnum.UPDATE_FAIL);
-        }
+        this.updateById(tag);
         return Result.okResult();
     }
 

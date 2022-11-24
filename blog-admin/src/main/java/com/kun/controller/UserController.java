@@ -1,6 +1,7 @@
 package com.kun.controller;
 
 import com.kun.domain.Result;
+import com.kun.domain.dto.ChangeUserStatusDto;
 import com.kun.domain.entity.Role;
 import com.kun.domain.entity.User;
 import com.kun.domain.vo.UserInfoAndRoleIdsVo;
@@ -73,5 +74,13 @@ public class UserController {
         }
         userService.removeByIds(userIds);
         return Result.okResult();
+    }
+
+    @PutMapping("/changeStatus")
+    public Result changeStatus(@RequestBody ChangeUserStatusDto changeUserStatusDto) {
+        User user = new User();
+        user.setId(changeUserStatusDto.getUserId());
+        user.setStatus(changeUserStatusDto.getStatus());
+        return Result.okResult(userService.getById(user));
     }
 }

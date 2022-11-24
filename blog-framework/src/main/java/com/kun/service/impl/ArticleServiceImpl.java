@@ -134,10 +134,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .collect(Collectors.toList());
 
         //添加博客和标签的关联
-        boolean b1 = articleTagService.saveBatch(articleTags);
-        if (!b1) {
-            throw new SystemException(AppHttpCodeEnum.ARTICLE_TAG_SAVE_FAIL);
-        }
+        articleTagService.saveBatch(articleTags);
+
         return Result.okResult();
     }
 
@@ -176,26 +174,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Transactional
     public Result updateArticle(AdminArticle2VO adminArticle2VO) {
         Article article = BeanCopyUtils.copyBean(adminArticle2VO, Article.class);
-        boolean isUpdate = this.updateById(article);
-        if (!isUpdate) {
-            throw  new SystemException(AppHttpCodeEnum.UPDATE_FAIL);
-        }
+        this.updateById(article);
+
         //删除原有的博客文章和标签的关联
         LambdaQueryWrapper<ArticleTag> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ArticleTag::getArticleId, article.getId());
-        boolean isRemove = articleTagService.remove(queryWrapper);
-        if (!isRemove) {
-            throw  new SystemException(AppHttpCodeEnum.DELETE_FAIL);
-        }
+        articleTagService.remove(queryWrapper);
+
         //添加新的博客和标签的关联关系
         List<ArticleTag> articleTagList = adminArticle2VO.getTags().stream()
                 .map(tagId -> new ArticleTag(article.getId(), tagId))
                 .collect(Collectors.toList());
 
-        boolean isSaveBatch = articleTagService.saveBatch(articleTagList);
-        if (!isSaveBatch) {
-            throw  new SystemException(AppHttpCodeEnum.UPDATE_FAIL);
-        }
+        articleTagService.saveBatch(articleTagList);
         return Result.okResult();
     }
 

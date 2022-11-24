@@ -24,7 +24,7 @@ public enum AppHttpCodeEnum {
     USER_NO_FIND(508,"查不到用户信息！！！"),
     FILE_TYPE_ERROR(509,"图片类型错误！！！"),
     UPDATE_FAIL(510,"更新失败！！！"),
-    DELETE_FAIL(510,"删除失败！！！"),
+    DELETE_FAIL(510,"删除文章和标签的关联失败！！！"),
     USERNAME_NOT_NULL(511,"用户名不能为空！！！"),
     PASSWORD_NOT_NULL(512,"用户密码不能为空！！！"),
     NICKNAME_NOT_NULL(513,"用户昵称不能为空！！！"),

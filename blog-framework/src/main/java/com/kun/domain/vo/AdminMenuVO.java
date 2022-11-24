@@ -36,4 +36,5 @@ public class AdminMenuVO implements Serializable {
     private String status;
     private String icon;
     private String remark;
+    private LocalDateTime createTime;
 }

@@ -27,26 +27,32 @@ public class LinkController {
     }
 
     @PostMapping
-    public Result add(@RequestBody Link link){
+    public Result add(@RequestBody Link link) {
         linkService.save(link);
         return Result.okResult();
     }
 
     @DeleteMapping("/{id}")
-    public Result delete(@PathVariable Long id){
+    public Result delete(@PathVariable Long id) {
         linkService.removeById(id);
         return Result.okResult();
     }
 
     @PutMapping
-    public Result edit(@RequestBody Link link){
+    public Result edit(@RequestBody Link link) {
         linkService.updateById(link);
         return Result.okResult();
     }
 
     @PutMapping("/changeLinkStatus")
-    public Result changeLinkStatus(@RequestBody Link link){
+    public Result changeLinkStatus(@RequestBody Link link) {
         linkService.updateById(link);
         return Result.okResult();
+    }
+
+    @GetMapping("/{id}")
+    public Result getInfo(@PathVariable(value = "id") Long id) {
+        Link link = linkService.getById(id);
+        return Result.okResult(link);
     }
 }

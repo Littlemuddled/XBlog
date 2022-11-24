@@ -56,10 +56,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public Result updateUserInfo(User user) {
-        boolean b = this.updateById(user);
-        if (!b) {
-            throw new SystemException(AppHttpCodeEnum.UPDATE_FAIL);
-        }
+        this.updateById(user);
         return Result.okResult();
     }
 

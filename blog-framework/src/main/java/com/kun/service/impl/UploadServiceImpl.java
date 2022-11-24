@@ -13,6 +13,7 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,7 @@ public class UploadServiceImpl implements UploadService {
         String url = this.uploadOSS(img, path);
         return Result.okResult(url);
     }
+
 
     private String uploadOSS(MultipartFile imgFile, String path) {
         //构造一个带指定 Region 对象的配置类

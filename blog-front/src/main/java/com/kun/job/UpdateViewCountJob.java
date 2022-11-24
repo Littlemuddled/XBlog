@@ -1,5 +1,7 @@
 package com.kun.job;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.kun.constants.RedisKey;
 import com.kun.domain.entity.Article;
 import com.kun.enums.AppHttpCodeEnum;
@@ -35,10 +37,11 @@ public class UpdateViewCountJob {
         List<Article> list = entrySet.stream()
                 .map(entry -> new Article(Long.valueOf(entry.getKey()), entry.getValue().longValue()))
                 .collect(Collectors.toList());
-//        list.stream().forEach(article -> articleService.updateById(article));
-        boolean b = articleService.updateBatchById(list);
-        if (!b) {
-            throw new SystemException(AppHttpCodeEnum.UPDATE_VIEW_COUNT_ERROR);
+
+        LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+        for (Article article : list) {
+            updateWrapper.eq(Article::getId,article.getId()).set(Article::getViewCount,article.getViewCount());
+            articleService.update(updateWrapper);
         }
     }
 

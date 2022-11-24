@@ -62,10 +62,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         if (!StringUtils.hasText(comment.getContent())) {
             throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
         }
-        boolean b = this.save(comment);
-        if (!b) {
-            throw new SystemException(AppHttpCodeEnum.CONTENT_SAVE_FAIL);
-        }
+        this.save(comment);
         return Result.okResult();
     }
 

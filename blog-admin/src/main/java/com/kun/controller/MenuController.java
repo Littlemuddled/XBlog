@@ -2,7 +2,9 @@ package com.kun.controller;
 
 import com.kun.domain.Result;
 import com.kun.domain.entity.Menu;
+import com.kun.domain.vo.AdminMenuVO;
 import com.kun.service.IMenuService;
+import com.kun.utils.BeanCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
@@ -17,7 +19,7 @@ import java.util.List;
  * @author kun
  * @since 2022-11-19
  */
-@Controller
+@RestController
 @RequestMapping("/system/menu")
 public class MenuController {
 
@@ -27,7 +29,8 @@ public class MenuController {
     @GetMapping("/list")
     public Result menuList(Menu menu) {
         List<Menu> menuList = menuService.menuList(menu);
-        return Result.okResult(menuList);
+        List<AdminMenuVO> adminMenuVOS = BeanCopyUtils.copyBeanList(menuList, AdminMenuVO.class);
+        return Result.okResult(adminMenuVOS);
     }
 
     @GetMapping(value = "/{menuId}")
