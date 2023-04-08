@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 数据库加密方式
-     * @return
+     * @return 加密方法
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
